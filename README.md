@@ -2,7 +2,7 @@
 Welcome to the public repository of the Computer Vision Lab, with love and passion for exploring new things.
 
 ---
-Hướng dẫn cách sử dụng repository của nhóm (Tạm thời):
+**Hướng dẫn cách sử dụng repository của nhóm (Tạm thời):**
 
 - Việc phân chia danh mục tài liệu và code hiện đang được chia nhỏ ra thành các nhánh nhỏ trong repository. Phần đầu tiên của dự án bao gồm code và cơ bản về Toán học được lưu trong nhánh "Basics".
 - Cách chuyển nhánh được thực hiện như sau:
