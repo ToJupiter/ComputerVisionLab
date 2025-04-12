@@ -9,4 +9,6 @@ Welcome to the public repository of the Computer Vision Lab, with love and passi
   
   ![image](https://github.com/user-attachments/assets/dad61a62-492b-4b87-829a-0cdebc8b1329)
 
-_Ấn vào main, chọn vào Basics. Tuỳ theo từng tuần làm việc, chọn folder phù hợp. Mỗi folder sẽ có giải thích chi tiết về công việc trong tuần._
+_Ấn vào main, chọn Basics. Tuỳ theo từng tuần làm việc, chọn folder phù hợp. Mỗi folder sẽ có giải thích chi tiết về công việc trong tuần._
+
+  ![image](https://github.com/user-attachments/assets/50dd5846-4b9e-4a54-96df-73da34ce1632)
