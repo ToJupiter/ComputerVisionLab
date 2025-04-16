@@ -3,14 +3,14 @@
 *   **Tên bài báo:** Sequential image segmentation based on minimum spanning tree representation
 *   **Link:** [DOI: 10.1016/j.patrec.2016.06.001](https://doi.org/10.1016/j.patrec.2016.06.001) []
 *   **Phương pháp:** **Phân vùng ảnh tuần tự** sử dụng **biểu diễn cây bao trùm tối thiểu (MST)**.
-*   **Hiệu suất:** Nguồn chỉ cung cấp thông tin библиографические và tóm tắt mô tả, không đề cập đến hiệu suất cụ thể.
+*   **Hiệu suất:** Nguồn chỉ cung cấp thông tin và tóm tắt mô tả, không đề cập đến hiệu suất cụ thể.
 
 ### 2. [IEEE 2001 International Conference on Image Processing - Thessaloniki, Greece (7-10 Oct. 2001)] Proceedings 2001 International Conference on Image Processing (Cat. No.01CH37205) - Scale space segmentation of color images using watersheds and fuzzy region merging
 
 *   **Tên bài báo:** [IEEE 2001 International Conference on Image Processing - Thessaloniki, Greece (7-10 Oct. 2001)] Proceedings 2001 International Conference on Image Processing (Cat. No.01CH37205) - Scale space segmentation of color images using watersheds and fuzzy region merging
 *   **Link:** [DOI: 10.1109/icip.2001.959150](https://doi.org/10.1109/icip.2001.959150) []
 *   **Phương pháp:** **Phân vùng ảnh màu theo không gian tỷ lệ** kết hợp **thuật toán Watersheds** và **hợp nhất vùng mờ**.
-*   **Hiệu suất:** Nguồn chỉ cung cấp thông tin библиографические và tóm tắt mô tả, không đề cập đến hiệu suất cụ thể. Tuy nhiên, nguồn có nhắc đến một phương pháp **multi-scale watershed approach (MSHLK)** được biết đến với chất lượng tốt nhưng chi phí tính toán cao (1 giây/kPixel), đây có thể là một phương pháp liên quan.
+*   **Hiệu suất:** Nguồn chỉ cung cấp thông tin và tóm tắt mô tả, không đề cập đến hiệu suất cụ thể. Tuy nhiên, nguồn có nhắc đến một phương pháp **multi-scale watershed approach (MSHLK)** được biết đến với chất lượng tốt nhưng chi phí tính toán cao (1 giây/kPixel), đây có thể là một phương pháp liên quan.
 
 ### 3. An Efficient Parallel Algorithm for Graph-Based Image Segmentation
 
