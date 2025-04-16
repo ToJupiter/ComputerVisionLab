@@ -10,3 +10,5 @@
 2. Tài liệu Lab:
 - CNN cho trẻ 5 tuổi: [CNN5Tuoi](CNN_explained.pdf)
 - SVM thật dễ hiểu: [SVM5Tuoi](SVM_explained.pdf)
+
+ [Bài báo và mô tả](links_and_des.md)
