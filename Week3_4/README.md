@@ -10,3 +10,5 @@
 1. Bé Na và giá nhà (Hồi quy tuyến tính): [Story](LRSlide.pdf)
 2. Bé Na và những chú thỏ (K Means và KNN): [KMeansKNN](KMeansAndKNN.pdf)
 
+Code được để tại: [Code](KMeansCode.ipynb)
+
