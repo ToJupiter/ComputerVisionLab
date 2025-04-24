@@ -1,35 +1,96 @@
 ---
-title: Home
-layout: home
+title: Hồi quy Logistic và Toán học của nó
+layout: default
+nav_order: 5
+math: katex # Đảm bảo cài đặt này để bật render công thức toán
 ---
 
-This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
+# Hồi quy Logistic
 
-If [Jekyll] is installed on your computer, you can also build and preview the created site *locally*. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages.
+Hồi quy Logistic (Logistic Regression) là một thuật toán cơ bản trong học máy được sử dụng cho các bài toán phân loại nhị phân. Mặc dù có tên là "Hồi quy", đây là một thuật toán phân loại chứ không phải hồi quy. Nó mô hình hóa xác suất một đầu vào nhất định thuộc về một danh mục cụ thể (thường là lớp dương tính).
 
-More specifically, the created site:
+## Hàm Sigmoid
 
-- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem
-- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages
+Trọng tâm của Hồi quy Logistic là **hàm sigmoid** (còn được gọi là hàm logistic). Hàm này lấy bất kỳ số thực nào và ánh xạ nó tới một giá trị nằm giữa 0 và 1. Điều này làm cho nó lý tưởng để biểu diễn xác suất.
 
-Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins.
+Hàm sigmoid, ký hiệu là $\sigma(z)$, được định nghĩa như sau:
 
-[Browse our documentation][Just the Docs] to learn more about how to use this theme.
+$$
+\sigma(z) = \frac{1}{1 + e^{-z}}
+$$
 
-To get started with creating a site, simply:
+Trong đó, $z$ là sự kết hợp tuyến tính của các đặc trưng đầu vào, các trọng số và hệ số chệch của mô hình:
 
-1. click "[use this template]" to create a GitHub repository
-2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
+$$
+z = \mathbf{w}^T \mathbf{x} + b
+$$
 
-If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md#hosting-your-docs-from-an-existing-project-repo) in the template README.
+Trong đó:
+*   $$\mathbf{w}$$ là vector trọng số.
+*   $$\mathbf{x}$$ là vector đặc trưng đầu vào.
+*   $$b$$ là hệ số chệch (bias term).
+*   $$\mathbf{w}^T \mathbf{x}$$ là tích vô hướng của trọng số và đặc trưng.
 
-----
+Đầu ra của hàm sigmoid, $$\sigma(z)$$, được hiểu là xác suất mà trường hợp $$\mathbf{x}$$ thuộc về lớp dương tính (lớp 1). Chúng ta có thể biểu diễn xác suất dự đoán là:
 
-[^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
+$$
+P(y=1 | \mathbf{x}; \mathbf{w}, b) = \sigma(\mathbf{w}^T \mathbf{x} + b)
+$$
 
-[Just the Docs]: https://just-the-docs.github.io/just-the-docs/
-[GitHub Pages]: https://docs.github.com/en/pages
-[README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
-[Jekyll]: https://jekyllrb.com
-[GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
-[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate
+và xác suất của lớp âm tính (lớp 0) là:
+
+$$
+P(y=0 | \mathbf{x}; \mathbf{w}, b) = 1 - \sigma(\mathbf{w}^T \mathbf{x} + b)
+$$
+
+## Hàm Chi phí (Hàm Mất mát)
+
+Để huấn luyện một mô hình Hồi quy Logistic, chúng ta cần một hàm chi phí đo lường mức độ phù hợp giữa các dự đoán của chúng ta với nhãn thực tế. Đối với phân loại, **cross-entropy** (hay log loss) thường được sử dụng. Nó phạt nặng mô hình khi nó tự tin vào một dự đoán sai.
+
+Đối với một mẫu huấn luyện đơn lẻ $$(\mathbf{x}^{(i)}, y^{(i)})$$, trong đó $$y^{(i)}$$ là nhãn thực tế (0 hoặc 1), mất mát là:
+
+$$
+L(\hat{y}^{(i)}, y^{(i)}) = - y^{(i)} \log(\hat{y}^{(i)}) - (1 - y^{(i)}) \log(1 - \hat{y}^{(i)})
+$$
+
+Ở đây, $$\hat{y}^{(i)}$$ là xác suất dự đoán cho mẫu thứ $$i$$: $$\hat{y}^{(i)} = \sigma(\mathbf{w}^T \mathbf{x}^{(i)} + b)$$.
+
+Tổng chi phí $$J(\mathbf{w}, b)$$ trên tất cả $$m$$ mẫu huấn luyện là trung bình cộng của các mất mát cá nhân:
+
+$$
+J(\mathbf{w}, b) = - \frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log(\hat{y}^{(i)}) + (1 - y^{(i)}) \log(1 - \hat{y}^{(i)}) \right]
+$$
+
+Mục tiêu của chúng ta trong quá trình huấn luyện là tìm ra các giá trị của $$\mathbf{w}$$ và $$b$$ sao cho hàm chi phí này được cực tiểu hóa.
+
+## Gradient Descent
+
+Để cực tiểu hóa hàm chi phí $$J(\mathbf{w}, b)$$, chúng ta thường sử dụng thuật toán tối ưu hóa như **gradient descent** (giảm gradient). Gradient descent cập nhật lặp lại các trọng số và hệ số chệch theo hướng làm giảm chi phí mạnh nhất.
+
+Công thức cập nhật cho một trọng số $$w_j$$ và hệ số chệch $$b$$ là:
+
+$$
+w_j := w_j - \alpha \frac{\partial J}{\partial w_j}
+$$
+
+$$
+b := b - \alpha \frac{\partial J}{\partial b}
+$$
+
+Trong đó $$\alpha$$ là tốc độ học (learning rate), kiểm soát kích thước của các bước nhảy.
+
+Các đạo hàm riêng của hàm chi phí đối với trọng số và hệ số chệch là:
+
+$$
+\frac{\partial J}{\partial w_j} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)}) x_j^{(i)}
+$$
+
+$$
+\frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})
+$$
+
+Các đạo hàm này chỉ ra hướng tăng mạnh nhất của hàm chi phí. Bằng cách trừ chúng đi (hoặc cộng với giá trị âm của chúng), chúng ta di chuyển về phía điểm cực tiểu. Thành phần $$(\hat{y}^{(i)} - y^{(i)})$$ là sự khác biệt giữa xác suất dự đoán và nhãn thực tế, biểu thị lỗi cho mỗi mẫu.
+
+## Tóm tắt
+
+Hồi quy Logistic, được hỗ trợ bởi hàm sigmoid, hàm chi phí cross-entropy và gradient descent, cung cấp một khuôn khổ đơn giản nhưng mạnh mẽ cho bài toán phân loại nhị phân. Hiểu biết về cơ sở toán học của nó là rất quan trọng để áp dụng và diễn giải mô hình một cách hiệu quả.
