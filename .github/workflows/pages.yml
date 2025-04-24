@@ -4,7 +4,7 @@
 # documentation.
 
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Latest deployment
+name: Latest deployment 2
 
 on:
   push:
@@ -32,33 +32,40 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: docs # Keep this for other commands if needed within 'docs'
+        working-directory: docs # Sets default CWD for run steps to 'docs'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        # Checks out repository at the root
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3' # Not needed with a .ruby-version file, but good to specify
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
-          working-directory: '${{ github.workspace }}/docs' # This is correct for bundle install
+          # Explicitly run bundle install within the 'docs' directory for this action
+          working-directory: '${{ github.workspace }}/docs'
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+        # This action runs at the repository root level by default
+
       - name: Build with Jekyll
-        # Outputs to the './_site' directory by default relative to the working directory
-        run: |
-          cd docs # Explicitly change directory to ensure bundle exec finds jekyll
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        # This 'run' step inherits the 'working-directory: docs' from the job defaults.
+        # No need for 'cd docs'.
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+        # Jekyll outputs to './_site' relative to the current working directory (which is 'docs')
+
       - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default,
-        # relative to the root of the repository checkout.
         uses: actions/upload-pages-artifact@v3
+        # This action needs the path relative to the repository root.
+        # Since the build ran in 'docs' and created '_site' there, the path is 'docs/_site'.
         with:
-          path: docs/_site/ # The artifact is in docs/_site relative to the checkout root
+          path: docs/_site/
 
   # Deployment job
   deploy:
