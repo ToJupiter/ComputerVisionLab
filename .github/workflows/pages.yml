@@ -50,7 +50,7 @@ jobs:
           # Explicitly set the working directory for the bundle install command
           # performed by this action. This ensures gems are installed relative
           # to the Gemfile in the docs directory.
-          working-directory: '${{ github.workspace }}/docs'
+          working-directory: docs
 
       - name: Setup Pages
         id: pages
