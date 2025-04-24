@@ -30,13 +30,16 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: docs # Sets default CWD for run steps to 'docs'
+    # REMOVED the defaults working-directory as it can sometimes interfere
+    # with how bundle exec finds the correct gem paths set by setup-ruby.
+    # We will manage working directories per step explicitly where needed.
+    # defaults:
+    #   run:
+    #     working-directory: docs
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        # Checks out repository at the root
+        # Checks out repository at the root directory
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -44,26 +47,32 @@ jobs:
           ruby-version: '3.3' # Not needed with a .ruby-version file, but good to specify
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
-          # Explicitly run bundle install within the 'docs' directory for this action
+          # Explicitly set the working directory for the bundle install command
+          # performed by this action. This ensures gems are installed relative
+          # to the Gemfile in the docs directory.
           working-directory: '${{ github.workspace }}/docs'
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-        # This action runs at the repository root level by default
+        # This action typically runs at the repository root
 
       - name: Build with Jekyll
-        # This 'run' step inherits the 'working-directory: docs' from the job defaults.
-        # No need for 'cd docs'.
+        # Explicitly set the working directory for this run step.
+        # This ensures bundle exec is run from the same directory where
+        # bundle install was executed by the setup-ruby action, allowing
+        # it to find the installed Jekyll gem.
+        working-directory: docs
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
-        # Jekyll outputs to './_site' relative to the current working directory (which is 'docs')
+        # Jekyll outputs to ./_site relative to the current working directory (docs)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        # This action needs the path relative to the repository root.
-        # Since the build ran in 'docs' and created '_site' there, the path is 'docs/_site'.
+        # The path here must be relative to the repository root.
+        # Since Jekyll built into 'docs/_site' when the CWD was 'docs',
+        # the artifact is located at 'docs/_site' from the repository root.
         with:
           path: docs/_site/
 
