@@ -1,0 +1,1 @@
+Đây là nơi chứa code hình ảnh của các phần trong website. Folder này sẽ giúp bạn có thêm nhiều kiến thức về Python, Jupyter Notebook và Toán học Tính toán. Viết bởi ToJupiter, tập trung vào sử dụng thư viện Manim.
